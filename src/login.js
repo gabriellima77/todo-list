@@ -1,0 +1,4 @@
+function singIn({user, password}){
+
+}
+
