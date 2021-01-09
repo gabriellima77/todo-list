@@ -9,7 +9,7 @@ function renderLoginWindow(){
     const inputsContent = [{classList: ["login-input"], placeHolder: "Enter Username"},
                            {classList: ["login-input"], placeHolder: "Enter Password"}];
     const form = createForm(labelsContent, inputsContent);
-    const div = dom.createDiv("login");
+    const div = dom.createDivById("login");
     const btnsContent = [{classList: ["btn"], type: "button", text: "Singin"}, 
                    {classList: ["btn"], type: "button", text: "Singup"}];
     const buttons = btnsContent.reduce((btns, btnContent)=> {
@@ -35,6 +35,34 @@ function createForm(labelsContent, inputsContent) {
     }
     dom.appendNode(form, ...labels);
     return form;
+}
+
+function getAlertPosition(alert) {
+    const input = document.querySelector(".login-input");
+    const left = input.offsetLeft + input.offsetWidth + 3;
+    const bottom = input.offsetTop + (input.offsetHeight / 2) + 30;
+    const position = {left, bottom};
+    return position;
+}
+
+export function putAlert(alert) {
+    const label = document.querySelector("#user");
+    const children = Array.from(label.children);
+    children.forEach(child=> {
+        const hasAlert = child.classList.contains("alert");
+        if(hasAlert){
+            label.removeChild(child);
+        }
+    });
+    const div = dom.createDivByClass(["alert"]);
+    const position = getAlertPosition(alert);
+    for(let key in position){
+        div.style[key] = position[key] + "px";
+    }
+    const para = document.createElement("p");
+    para.textContent = alert;
+    dom.appendNode(div, para);
+    dom.appendNode(label, div);
 }
 
 function startDemo() {

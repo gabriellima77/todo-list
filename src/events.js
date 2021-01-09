@@ -2,10 +2,17 @@ import {dom} from './DOM/dom';
 import {todo} from './todo';
 import {renderMainContent} from './DOM/main-content'
 import {removeProjects, putProjects} from './DOM/side-bar';
-import {startDemo} from './DOM/singup';
+import {startDemo, putAlert} from './DOM/singup';
 
 export function demoEvent(){
-    startDemo();
+    const hasName = localStorage.getItem("name");
+    if(hasName){
+        dom.removeBodyContent();
+        renderMainContent();
+    }
+    else{
+        startDemo();
+    }
 }
 
 function isValidName() {
@@ -25,6 +32,9 @@ export function startApp() {
     if(isValidName()){
         dom.removeBodyContent();
         renderMainContent();
+    }
+    else {
+        putAlert("Has at least one letter at beginning");
     }
 }
 

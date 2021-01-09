@@ -14,9 +14,15 @@ const Dom = ()=> {
         return img;
     }
     
-    function createDiv(id) {
+    function createDivById(id) {
         const div = document.createElement("div");
         div.id = id;
+        return div;
+    }
+
+    function createDivByClass(classList) {
+        const div = document.createElement("div");
+        classList.forEach(clas=> div.classList.add(clas));
         return div;
     }
 
@@ -78,10 +84,10 @@ const Dom = ()=> {
         children.forEach(child=> body.removeChild(child));
     }
 
-    return {createDiv, createNav, appendNode,
+    return {createDivById, createNav, appendNode,
             createH1, createSpan, createBtn,
             removeBodyContent, createTextInput, createLabel,
-            createImg};
+            createImg, createDivByClass};
 }
 
 const dom = Dom();

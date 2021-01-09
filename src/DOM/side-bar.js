@@ -4,11 +4,11 @@ import {showProjects} from '../events';
 
 function renderSideMenu() {
     const nav = dom.createNav("side-menu");
-    const div = dom.createDiv("projects");
+    const div = dom.createDivById("projects");
     div.addEventListener("click", showProjects.bind(div));
-    const box = dom.createDiv("");
+    const box = dom.createDivById("");
     box.classList.add("box");
-    const content = dom.createDiv("content");
+    const content = dom.createDivById("content");
     const arrow = svg.createSVGArrow(["arrow"], "0 0 20 20");
     const para = document.createElement("p");
     const plusSVG = svg.createSVGPlus(["plus-sign", "end"], "0 0 40 40");
@@ -27,7 +27,7 @@ function removeProjects() {
 function putProjects() {
     removeProjects();
     const content = document.querySelector("#content");
-    const div = dom.createDiv("add-project");
+    const div = dom.createDivById("add-project");
     const plus = svg.createSVGPlus(["plus-sign", "end"], "0 0 40 40");
     const para = document.createElement("p");
     para.textContent = "Add Project";

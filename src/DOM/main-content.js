@@ -3,8 +3,8 @@ import {renderSideMenu} from './side-bar';
 import {createHeader} from './header-bar';
 
 function createContainer() {
-    const content = dom.createDiv("container");
-    const projectInfo = dom.createDiv("project-info");
+    const content = dom.createDivById("container");
+    const projectInfo = dom.createDivById("project-info");
     const h2 = document.createElement("h2");
     h2.id = "project-name";
     h2.textContent = "Default";
@@ -12,7 +12,7 @@ function createContainer() {
     para.classList.add("date");
     para.textContent = "Fri, Jan, 8";
     dom.appendNode(projectInfo, h2, para)
-    const addTask = dom.createDiv("add-task");
+    const addTask = dom.createDivById("add-task");
     addTask.addEventListener("click", renderAddTaskCard);
     const todo = document.createElement("div");
     todo.classList.add("todo");
@@ -37,6 +37,6 @@ export function renderMainContent(){
 
 function renderAddTaskCard() {
     const container = document.getElementById("container");
-    const cardAdd = dom.createDiv("card-add");
+    const cardAdd = dom.createDivById("card-add");
     dom.appendNode(container, cardAdd);
 }
