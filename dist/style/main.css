@@ -87,8 +87,6 @@ main {
     background-color: rgba(0, 0, 0, 0.4);
 }
 
-
-
 .box {
     display: flex;
     align-items: center;
@@ -105,7 +103,7 @@ main {
 }
 
 .arrow.active {
-    transform: rotate(90deg);
+    transform:  translateY(20%) rotate(90deg);
 }
 
 .end {
@@ -114,17 +112,28 @@ main {
 
 #content {
     width: 90%;
-    height: 0%;
+    height: 0;
+    display: flex;
     transition: all 1s;
+    align-items: center;
+    flex-direction: column-reverse;
+
     background-color: teal;
 }
 
-.closed #content {
-    opacity: 0;
+#add-project {
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 80%;
+    height: 20px;
+    cursor: pointer;
+    margin-bottom: 5px;
 }
 
 .content-active {
-    height: auto !important;
+    height: 30% !important;
 }
 
 #container {
@@ -182,6 +191,10 @@ main {
     margin-left: 30px;
     align-self: center;
     transition: all .5s;
+}
+
+.end:hover {
+    fill: #9b9b9b;
 }
 
 #add-task:hover .plus-sign {

@@ -1,7 +1,6 @@
-export class todo {
+class todo {
     constructor(title){
         this.title = title;
-        this.dueDate = "date";
         this.checked = false;
         this.notes = "";
     }
@@ -46,3 +45,52 @@ export class todo {
         this.setDescription = content.description;
     }
 }
+
+function project(title) {
+    const projectTitle = title;
+    const todos = [];
+
+    const addTodo = (todoContent)=> {
+        const title = todoContent.title;
+        const newTodo = new todo(title);
+        newTodo.putContent(todoContent);
+        todos.push(todoObject);
+    }
+
+    const removeTodo = (todoObject)=> {
+        const todoIndex = todos.indexOf(todoObject);
+        return todos.splice(todoIndex, 1);
+    }
+
+    const getTodo = (index)=> {
+        return todos[index];
+    }
+
+    const getProject = ()=> todos;
+
+    const getProjectTitle = ()=> projectTitle;
+
+    return {addTodo, getProject, getTodo, removeTodo, getProjectTitle};
+}
+
+const allProjects = ()=> {
+    const title = "default";
+    const all = [];
+
+    function addProject(project) {
+        all.push(project);
+    }
+
+    function removeProject(project) {
+        const projectIndex = all.indexOf(project);
+        return all.splice(projectIndex, 1);
+    }
+
+    function getAllProjects() {
+        return all;
+    }
+
+    return {addProject, removeProject, getAllProjects};
+}
+
+export {todo, project, allProjects};
