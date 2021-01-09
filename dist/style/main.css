@@ -3,19 +3,19 @@
 }
 
 header {
-    display: flex;
-    align-items: center;
     width: 100%;
     height: 10%;
+    display: flex;
+    align-items: center;
     background-color: rgb(113, 113, 196);
 }
 
 #menu {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     width: 25%;
     height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #home {
@@ -30,12 +30,12 @@ header {
 }
 
 #menu-btn {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
     width: 10%;
     height: 33%;
+    display: flex;
     cursor: pointer;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .line {
@@ -53,9 +53,9 @@ header {
 }
 
 main {
-    display: flex;
     width: 100%;
     height: 90%;
+    display: flex;
 }
 
 #side-menu {
@@ -64,9 +64,16 @@ main {
     align-items: center;
     width: 25%;
     background-color: turquoise;
+    transition: width 1s;
+
+}
+
+.closed {
+    width: 0% !important;
 }
 
 #projects {
+    color: white;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     cursor: pointer;
@@ -76,6 +83,11 @@ main {
     width: 90%;
     height: 10%;
     background-color: rgba(0, 0, 0, 0.4);
+    transition: opacity .5s;
+}
+
+.closed #projects {
+    opacity: 0;
 }
 
 .arrow {
@@ -88,7 +100,7 @@ main {
     transition: transform .5s;
 }
 
-#projects:hover .arrow {
+.arrow.active {
     transform: rotate(45deg);
 }
 
@@ -96,25 +108,147 @@ main {
     width: 90%;
     height: 0%;
     background-color: teal;
-    transition: height 1s;
+    transition: all 1s;
+}
+
+.closed #content {
+    opacity: 0;
+}
+
+.content-active {
+    height: 80% !important;
 }
 
 #container {
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 70%;
+    width: 100%;
     height: 100%;
+    display: flex;
+    margin: 0 auto;
+    align-items: center;
+    flex-direction: column;
+    justify-content: flex-start;
     background-color: rgb(221, 103, 103);
 }
 
+#project-info {
+    height: 10vh;
+    display: flex;
+    color: white;
+    align-items: center;
+    justify-content: center;
+}
+
+.date {
+    font-size: .8rem;
+    color: rgb(202, 202, 202);
+}
+
+#project-name {
+    font-size: 2rem;
+    margin-right: 5px;
+}
+
+#add-task {
+    width: 30%;
+    height: 40px;
+    display: flex;
+    cursor: pointer;
+    color: #cecece;
+    align-items: center;
+    margin-bottom: 10px;
+    border-top: 1px solid #cecece;
+    border-bottom: 1px solid #cecece;
+    transition: border .5s;
+}
+
+#add-task:hover {
+    border-top: 1px solid royalblue;
+    border-bottom: 1px solid royalblue;
+}
+
+.plus-sign {
+    width: 25px;
+    height: 25px;
+    fill: #cecece;
+    cursor: pointer;
+    margin-left: 30px;
+    align-self: center;
+    transition: all .5s;
+}
+
+#add-task:hover .plus-sign {
+    width: 30px;
+    height: 30px;
+    fill: royalblue;
+}
+
+#add-task  p{
+    margin-left: 10px;
+    transition: all .5s;
+}
+
+#add-task:hover p {
+    font-size: 1.2rem;
+    color: royalblue;
+}
+
 .todo {
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
+    display: flex;
+    right: 0;
     width: 80%;
     height: 10%;
+    position: relative;
+    transition: right .5s;
+    border-top-left-radius: 10px;
     border-left: 30px solid blue;
+    border-bottom-left-radius: 10px;
     box-shadow: 0px 1px 4px 0px blue;
 }
+
+.todo:hover {
+    right: 10px;
+}
+
+#card-add {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 20px;
+    margin-top: 30px;
+    width: 25%;
+    height: 80%;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.card-form {
+    width: 80%;
+    color: white;
+}
+
+#card-add label {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 15%;
+    margin-top: 20px;
+}
+
+.add-input {
+    height: 100%;
+}
+
+#options {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    height: 25%;
+    width: 100%;
+}
+
+.card-btn {
+    width: 40%;
+    height: 60%;
+}
+

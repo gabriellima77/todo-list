@@ -23,6 +23,10 @@ export class todo {
         this.checked = checked;
     }
 
+    set setDueData(date){
+        this.dueDate = date;
+    }
+
     get getDescription() {
         return this.description;
     }
@@ -33,5 +37,12 @@ export class todo {
 
     get getNotes(){
         return this.notes;
+    }
+
+    putContent(content) {
+        this.dueDate = content.date;
+        this.setNotes = content.notes;
+        this.setPriority = content.priority;
+        this.setDescription = content.description;
     }
 }

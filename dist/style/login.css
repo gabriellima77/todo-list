@@ -15,7 +15,7 @@ body {
     background-blend-mode: multiply,multiply;
 }
 
-form {
+.form-login {
     border-radius: 10px;
     display: flex;
     flex-direction: column;

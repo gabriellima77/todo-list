@@ -67,6 +67,7 @@ const Dom = ()=> {
     
     function createForm(labelsContent, inputsContent) {
         const form = document.createElement("form");
+        form.classList.add("form-login");
         const labels = [];
         for(let i = 0; i < labelsContent.length; i++){
             let input = createTextInput(inputsContent[i]);
@@ -101,13 +102,12 @@ const Dom = ()=> {
 
     function createMain(){
         const main = document.createElement("main");
-        const nav = createNav("side-menu");
-        const div = createDiv("container");
+        const div = renderContent();
+        const nav = renderSideMenu();
         appendNode(main, nav, div);
         return main;
     }
 
-    
     function renderLoginWindow(){
         const body = document.querySelector("body");
         const imgSrc = "https://www.flaticon.com/svg/static/icons/svg/747/747376.svg";
@@ -135,6 +135,35 @@ const Dom = ()=> {
         const main = createMain();
         appendNode(body, header, main);
     }
+
+    function renderSideMenu() {
+        const nav = createNav("side-menu");
+        const div = createDiv("projects");
+        const content = createDiv("content");
+        const span = createSpan(["arrow"]);
+        const para = document.createElement("p");
+        para.textContent = "Projects";
+        appendNode(div, span, para);
+        appendNode(nav, div, content);
+        return nav;
+    }
+
+    function renderContent() {
+        const content = createDiv("container");
+        const projectInfo = createDiv("project-info");
+        const h2 = document.createElement("h2");
+        h2.id = "project-name";
+        h2.textContent = "Default";
+        const para = document.createElement("p");
+        para.classList.add("date");
+        para.textContent = "Fri, Jan, 8";
+        appendNode(projectInfo, h2, para)
+        const addTask = createDiv("add-task");
+        const todo = document.createElement("div");
+        todo.classList.add("todo");
+        appendNode(content, projectInfo, addTask, todo);
+        return content;
+    }
     
     function removeBodyContent() {
         const body = document.querySelector("body");
@@ -143,7 +172,13 @@ const Dom = ()=> {
         children.forEach(child=> body.removeChild(child));
     }
 
-    return {renderLoginWindow, removeBodyContent, renderMainContent}
+    function renderAddTaskCard() {
+        const container = document.getElementById("container");
+        const cardAdd = createDiv("card-add");
+        appendNode(container, cardAdd);
+    }
+
+    return {renderLoginWindow, removeBodyContent, renderMainContent, renderAddTaskCard}
 }
 
 const dom = Dom();
