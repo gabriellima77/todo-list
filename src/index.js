@@ -4,7 +4,7 @@ import {demoEvent, menuFunction, showProjects} from './events';
 // dom.renderLoginWindow();
 // const btn = document.querySelector(".demo");
 // btn.addEventListener("click", demoEvent);
-// dom.renderMainContent();
+dom.renderMainContent();
 const addBtn = document.querySelector("#add-task");
 const menuBtn = document.querySelector("#menu-btn");
 const projects = document.querySelector("#projects");

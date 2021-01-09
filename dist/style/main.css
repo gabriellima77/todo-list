@@ -73,42 +73,50 @@ main {
 }
 
 #projects {
-    color: white;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    cursor: pointer;
-    margin-top: 10px;
-    display: flex;
-    align-items: center;
     width: 90%;
     height: 10%;
-    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    color: white;
+    cursor: pointer;
+    margin-top: 10px;
+    align-items: center;
     transition: opacity .5s;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    justify-content: space-between;
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
-.closed #projects {
-    opacity: 0;
+
+
+.box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .arrow {
-    margin: 0 10px 0 20px;
-    width: 10px;
-    height: 10px;
-    transform: rotate(-45deg);
-    border-right: 2px solid white;
-    border-bottom: 2px solid white;
+    width: 20px;
+    height: 20px;
+    margin: 0 10px;
+    stroke: white;
+    stroke-width: 2px;
     transition: transform .5s;
 }
 
 .arrow.active {
-    transform: rotate(45deg);
+    transform: rotate(90deg);
+}
+
+.end {
+    margin-right: 10px;
 }
 
 #content {
     width: 90%;
     height: 0%;
-    background-color: teal;
     transition: all 1s;
+    background-color: teal;
 }
 
 .closed #content {
@@ -116,7 +124,7 @@ main {
 }
 
 .content-active {
-    height: 80% !important;
+    height: auto !important;
 }
 
 #container {
@@ -156,9 +164,9 @@ main {
     color: #cecece;
     align-items: center;
     margin-bottom: 10px;
+    transition: border .5s;
     border-top: 1px solid #cecece;
     border-bottom: 1px solid #cecece;
-    transition: border .5s;
 }
 
 #add-task:hover {
@@ -193,10 +201,10 @@ main {
 }
 
 .todo {
-    display: flex;
     right: 0;
     width: 80%;
     height: 10%;
+    display: flex;
     position: relative;
     transition: right .5s;
     border-top-left-radius: 10px;
@@ -251,4 +259,3 @@ main {
     width: 40%;
     height: 60%;
 }
-

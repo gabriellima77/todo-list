@@ -57,6 +57,58 @@ const Dom = ()=> {
         btn.textContent = btnContent.text;
         return btn;
     }
+
+    function getSvg(content){
+        const xmlns = "http://www.w3.org/2000/svg";
+        const svg = document.createElementNS(xmlns, "svg");
+        content.classList.forEach(clas=> svg.classList.add(clas));
+        svg.setAttributeNS(null, "viewBox", content.viewBox);
+        return svg;
+    }
+    /* 
+        === svgContent Example ===
+
+        svgContent = {
+            classList: ["class"],
+            viewBox: "0 0 300 300",
+            rects: [{classList: ["class"], x, y, rx, ry, width, height}]
+        }
+     */
+    function createSVGRect(svgContent) {
+        const xmlns = "http://www.w3.org/2000/svg";
+        const svg = getSvg({classList: svgContent.classList, viewBox: svgContent.viewBox});
+        svgContent.rects.forEach(r=> {
+            let rect = document.createElementNS(xmlns, "rect");
+            for(let key in r){
+                if(key == "classList"){
+                    r[key].forEach(clas=> rect[key].add(clas));
+                }
+                else {
+                    rect.setAttributeNS(null, key, r[key]);
+                }
+            }
+            appendNode(svg, rect);
+        });
+        return svg;
+    }
+
+    function createSVGLine(svgContent) {
+        const xmlns = "http://www.w3.org/2000/svg";
+        const svg = getSvg({classList: svgContent.classList, viewBox: svgContent.viewBox});
+        svgContent.lines.forEach(l=>{
+            let line = document.createElementNS(xmlns, "line");
+            for(let key in l){
+                if(key == "classList"){
+                    l[key].forEach(clas=> line[key].add(clas));
+                }
+                else {
+                    line.setAttributeNS(null, key, l[key]);
+                }
+            }
+            appendNode(svg, line);
+        });
+        return svg;
+    }
     
     function appendNode(parent, ...children){
         children.forEach(child => {
@@ -137,13 +189,25 @@ const Dom = ()=> {
     }
 
     function renderSideMenu() {
+        const plusContent = {classList:["plus-sign", "end"], viewBox: "0 0 40 40",
+                             rects: [{classList: ["plus"], x: 17.5, y: 5, rx: 3, ry: 3, width: 5, height: 30},
+                             {classList: ["plus"], x: 5, y: 17.5, rx: 3, ry: 3, width: 30, height: 5}]
+                            };
+        const arrowContent = {classList:["arrow"], viewBox: "0 0 20 20",
+                              lines: [{classList: ["arrow-line"], x1: 10, y1: 0, x2: 19, y2: 10},
+                              {classList: ["arrow-line"], x1: 19, y1: 10, x2: 10, y2: 19}]
+                            };
         const nav = createNav("side-menu");
         const div = createDiv("projects");
+        const box = createDiv("");
+        box.classList.add("box");
         const content = createDiv("content");
-        const span = createSpan(["arrow"]);
+        const arrow = createSVGLine(arrowContent);
         const para = document.createElement("p");
+        const plusSVG = createSVGRect(plusContent);
         para.textContent = "Projects";
-        appendNode(div, span, para);
+        appendNode(box, arrow, para)
+        appendNode(div, box, plusSVG);
         appendNode(nav, div, content);
         return nav;
     }

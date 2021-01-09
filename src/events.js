@@ -7,12 +7,18 @@ export function demoEvent(){
 
 export function menuFunction() {
     const menu = document.querySelector("#side-menu");
+    const arrow = document.querySelector(".arrow");
     const hasClosed = menu.classList.contains("closed");
-    (hasClosed)? menu.classList.remove("closed"): menu.classList.add("closed");
+    if(hasClosed) {
+        menu.classList.remove("closed");
+    }else {
+        menu.classList.add("closed");
+        arrow.classList.remove("active");
+    }
 }
 
 export function showProjects() {
-    const arrow = this.firstElementChild;
+    const arrow = this.firstElementChild.firstElementChild;
     const content = document.querySelector("#content");
     const isActive = arrow.classList.contains("active");
     if(isActive) {
