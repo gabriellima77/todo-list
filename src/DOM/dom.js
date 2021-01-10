@@ -79,7 +79,6 @@ const Dom = ()=> {
 
     function removeBodyContent() {
         const body = document.querySelector("body");
-        body.style.background = "none";
         const children = Array.from(body.children);
         children.forEach(child=> body.removeChild(child));
     }

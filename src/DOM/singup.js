@@ -1,5 +1,5 @@
 import {dom} from './dom';
-import {startApp} from '../events';
+import {startApp, demoEvent} from '../events';
 
 function renderLoginWindow(){
     const body = document.querySelector("body");
@@ -17,6 +17,7 @@ function renderLoginWindow(){
         return btns;
     }, []);
     const demoBtn = dom.createBtn({classList: ["btn", "demo"], type:"button", text: "Demo Account"});
+    demoBtn.addEventListener("click", demoEvent);
     dom.appendNode(div, ...buttons);
     dom.appendNode(form, div, demoBtn);
     dom.appendNode(body, img, form);
@@ -37,7 +38,7 @@ function createForm(labelsContent, inputsContent) {
     return form;
 }
 
-function getAlertPosition(alert) {
+function getAlertPosition() {
     const input = document.querySelector(".login-input");
     const left = input.offsetLeft + input.offsetWidth + 3;
     const bottom = input.offsetTop + (input.offsetHeight / 2) + 30;
@@ -55,7 +56,7 @@ export function putAlert(alert) {
         }
     });
     const div = dom.createDivByClass(["alert"]);
-    const position = getAlertPosition(alert);
+    const position = getAlertPosition();
     for(let key in position){
         div.style[key] = position[key] + "px";
     }

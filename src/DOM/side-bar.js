@@ -1,6 +1,7 @@
 import {dom} from './dom';
 import {svg} from './svg';
 import {showProjects} from '../events';
+import {AddProject} from './main-content';
 
 function renderSideMenu() {
     const nav = dom.createNav("side-menu");
@@ -12,6 +13,7 @@ function renderSideMenu() {
     const arrow = svg.createSVGArrow(["arrow"], "0 0 20 20");
     const para = document.createElement("p");
     const plusSVG = svg.createSVGPlus(["plus-sign", "end"], "0 0 40 40");
+    plusSVG.addEventListener("click", AddProject, true);
     para.textContent = "Projects";
     dom.appendNode(box, arrow, para)
     dom.appendNode(div, box, plusSVG);
@@ -28,6 +30,7 @@ function putProjects() {
     removeProjects();
     const content = document.querySelector("#content");
     const div = dom.createDivById("add-project");
+    div.addEventListener("click", AddProject, true);
     const plus = svg.createSVGPlus(["plus-sign", "end"], "0 0 40 40");
     const para = document.createElement("p");
     para.textContent = "Add Project";

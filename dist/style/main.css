@@ -52,6 +52,26 @@ header {
     color: white;
 }
 
+.sing-out {
+    right: 40px;
+    width: 100px;
+    height: 40px;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    border-radius: 4px;
+    transition: background .5s;
+    background-color: #f3f3f3;
+}
+
+.sing-out:hover {
+    background-color: #d4d4d4;
+}
+
+.sing-out:active {
+    background-color: #acacac;
+}
+
 main {
     width: 100%;
     height: 90%;
@@ -59,13 +79,12 @@ main {
 }
 
 #side-menu {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     width: 25%;
-    background-color: turquoise;
+    display: flex;
+    align-items: center;
     transition: width 1s;
-
+    flex-direction: column;
+    background-color: turquoise;
 }
 
 .closed {
@@ -111,29 +130,37 @@ main {
 }
 
 #content {
-    width: 90%;
     height: 0;
+    width: 90%;
     display: flex;
     transition: all 1s;
     align-items: center;
-    flex-direction: column-reverse;
-
     background-color: teal;
+    flex-direction: column-reverse;
 }
 
 #add-project {
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
     width: 80%;
     height: 20px;
+    display: flex;
+    margin: 5px 0;
+    color: white;
     cursor: pointer;
-    margin-bottom: 5px;
+    align-items: center;
+    transition: color .5s;
+    justify-content: flex-start;
+}
+
+#add-project:hover {
+    color: #9b9b9b;
+}
+
+#add-project:hover .plus-sign {
+    fill: #9b9b9b;
 }
 
 .content-active {
-    height: 30% !important;
+    height: auto !important;
 }
 
 #container {
@@ -231,44 +258,92 @@ main {
 }
 
 #card-add {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-radius: 20px;
-    margin-top: 30px;
     width: 25%;
     height: 80%;
+    display: flex;
+    color: white;
+    margin-top: 30px;
+    position: absolute;
+    align-items: center;
+    border-radius: 20px;
+    flex-direction: column;
     background-color: rgba(0, 0, 0, 0.4);
 }
 
-.card-form {
-    width: 80%;
-    color: white;
-}
 
-#card-add label {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
+#title-label {
+    width: 70%;
     height: 15%;
+    display: flex;
     margin-top: 20px;
+    text-align: center;
+    flex-direction: column;
 }
 
 .add-input {
-    height: 100%;
+    border: none;
+    outline: none;
+    color: white;
+    margin-top: 10px;
+    transition: all .5s;
+    background-color: transparent;
+    border-bottom: 1px solid white;
+
+}
+
+.add-input:focus {
+    background-color: rgba(59, 56, 255, .2);
+    border-bottom: 1px solid rgb(59, 56, 255);
+}
+
+input[type="color"] {
+    opacity: 0;
+    width: 15px;
+    height: 15px;
+}
+
+#color-input {
+    align-self: start;
+    margin-right: 10px;
+    border-radius: 50%;
+    border: 2px solid white;
+    background-color: #00ffd5;
+}
+
+#color-label {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: flex-end;
+    width: 70%;
 }
 
 #options {
-    margin-top: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
     height: 25%;
     width: 100%;
+    display: flex;
+    margin-top: 10px;
+    align-items: flex-end;
+    justify-content: space-between;
 }
 
-.card-btn {
-    width: 40%;
+.option-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+    height: 10%;
+    margin-top: 30%;
+}
+
+.confirm-btn, .cancel-btn {
+    border-radius: 4px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    cursor: pointer;
+    width: 30%;
     height: 60%;
+    background-color: white;
 }
