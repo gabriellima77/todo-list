@@ -43,6 +43,7 @@ class todo {
         this.notes = content.notes;
         this.priority = content.priority;
         this.description = content.description;
+        this.colorLabel = content.color;
     }
 }
 
@@ -53,11 +54,8 @@ class project {
         this.todos = [];
     }
 
-    addTodo(todoContent){
-        const title = todoContent.title;
-        const newTodo = new todo(title);
-        newTodo.putContent(todoContent);
-        this.todos.push(newTodo);
+    addTodo(todo){
+        this.todos.push(todo);
     }
 
     removeTodo(todoObject){

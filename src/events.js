@@ -1,12 +1,21 @@
+import {allProject, allTasks} from './index';
 import {dom} from './DOM/dom';
 import {todo, project} from './todo';
-import {renderMainContent, removeCard, getTaskContent} from './DOM/main-content'
-import {removeProjects, putProjects} from './DOM/side-bar';
+import {renderMainContent, removeCard,
+        getTaskContent, createTaskTag,
+        cleanContainer, createContainer} from './DOM/main-content';
+import {removeProjects, putProjects, createDivProject} from './DOM/side-bar';
 import {startDemo, putAlert} from './DOM/singup';
 
 
-const allProject = [];
-const allTasks = new project("Default", "blue");
+function selectProject() {
+    const main = document.querySelector("main");
+    const index = this.dataset.index;
+    const project = allProject[index];
+    cleanContainer();
+    const container = createContainer(project);
+    main.appendChild(container);
+}
 
 export function demoEvent(){
     const hasName = localStorage.getItem("name");
@@ -75,11 +84,11 @@ export function showProjects(e) {
     else {
         arrow.classList.add("active");
         content.classList.add("content-active");
-        putProjects();
+        putProjects(allProject);
     }
 }
 
-function getAndValidTitle(){
+function ValidTitle(){
     const regex = /^[a-zA-Z].+/;
     const input = document.querySelector(".add-input");
     const title = input.value;
@@ -92,8 +101,29 @@ function getAndValidTitle(){
 
 }
 
+function isContentOpen(){
+    const content = document.querySelector("#content");
+    const hasClass = content.classList.value;
+    if(hasClass){
+        return true;
+    }
+    return false;
+}
+
+export function putProjectTag(project){
+    const content = document.querySelector("#content");
+    if(isContentOpen()){
+        const projectDiv = createDivProject(project);
+        projectDiv.addEventListener("click", selectProject);
+        const projectIndex = allProject.indexOf(project);
+        projectDiv.dataset.index = projectIndex;
+        content.appendChild(projectDiv);
+    }
+    return;
+}
+
 export function addProject() {
-    const card = this.parentElement.parentElement;
+    const card = document.querySelector("#card-add");
     const children = Array.from(card.children);
     const labels = children.filter(child=> {
         if(child.nodeName == "LABEL"){
@@ -107,18 +137,42 @@ export function addProject() {
             color = input.firstElementChild.value;
         }
     });
-    const title = getAndValidTitle();
+    const title = ValidTitle();
     if(title) {
         const newProject = new project(title, color);
-        allProject.push(newProject)
-        console.log(allProject);
+        allProject.push(newProject);
+        putProjectTag(newProject);
         removeCard();
     }
 }
 
-export function confirmTaskEvent() {
+function updateProjectLength(index, length){
+    if(isContentOpen()){
+        const projects = Array.from(document.querySelectorAll(".project-tag"));
+        const project = projects.filter(tag=>{
+            if(tag.dataset.index == index){
+                return tag;
+            }
+        })[0];
+        console.log(project);
+        const numberOfTasks = project.lastElementChild;
+        numberOfTasks.textContent = length;
+    }
+    return;
+}
+
+export function confirmTaskEvent(project) {
+    const container = document.querySelector("#container");
     const content = getTaskContent();
-    console.log(content);
-    allTasks.addTodo(content);
-    console.log(allTasks);
+    const newTodo = new todo(content.title);
+    newTodo.putContent(content);
+    allTasks.addTodo(newTodo);
+    project.addTodo(newTodo);
+    const index = allTasks.todos.indexOf(newTodo);
+    const projectIndex = allProject.indexOf(project);
+    const div = createTaskTag(newTodo);
+    div.dataset.index = index;
+    updateProjectLength(projectIndex, project.todos.length);
+    container.appendChild(div);
+    removeCard();
 }

@@ -1,29 +1,63 @@
+import {allTasks} from '../index';
 import {dom} from './dom';
+import {svg} from './svg';
 import {renderSideMenu} from './side-bar';
 import {createHeader} from './header-bar';
 import {addProject, confirmTaskEvent} from '../events';
 
-function createContainer() {
+let currentProject;
+
+export function createTaskTag(todo) {
+    const div = dom.createDivByClass(["todo"]);
+    div.style.borderLeftColor = todo.colorLabel;
+    div.style.boxShadow = `0px 1px 4px 0px ${todo.colorLabel}`;
+    return div;
+}
+
+function createAddTaskBtn() {
+    const addTask = dom.createDivById("add-task");
+    addTask.addEventListener("click", AddTaskEvent);
+    const plusSvg = svg.createSVGPlus(["plus-sign"], "0 0 40 40");
+    const para = document.createElement("p");
+    para.textContent = "Add Task";
+    dom.appendNode(addTask, plusSvg, para);
+    return addTask;
+}
+
+export function cleanContainer() {
+    const main = document.querySelector("main");
+    const container = document.querySelector("#container");
+    main.removeChild(container);
+}
+
+function putTasks(container) {
+    const todos = currentProject.todos;
+    todos.forEach(todo=> {
+        let div = createTaskTag(todo);
+        container.appendChild(div);
+    });
+}
+
+export function createContainer(project) {
+    currentProject = project;
     const content = dom.createDivById("container");
     const projectInfo = dom.createDivById("project-info");
     const h2 = document.createElement("h2");
     h2.id = "project-name";
-    h2.textContent = "Default";
+    h2.textContent = project.projectTitle;
     const para = document.createElement("p");
     para.classList.add("date");
     para.textContent = "Fri, Jan, 8";
     dom.appendNode(projectInfo, h2, para)
-    const addTask = dom.createDivById("add-task");
-    addTask.addEventListener("click", AddTaskEvent);
-    const todo = document.createElement("div");
-    todo.classList.add("todo");
-    dom.appendNode(content, projectInfo, addTask, todo);
+    const addTask = createAddTaskBtn();
+    dom.appendNode(content, projectInfo, addTask);
+    putTasks(content);
     return content;
 }
 
 export function createMain(){
     const main = document.createElement("main");
-    const div = createContainer();
+    const div = createContainer(allTasks);
     const nav = renderSideMenu();
     dom.appendNode(main, nav, div);
     return main;
@@ -84,7 +118,7 @@ function createOptions(event) {
     const divOption = dom.createDivByClass(["option-box"]);
     const confirmBtn = dom.createDivByClass(["confirm-btn"]);
     confirmBtn.textContent = "Confirm";
-    confirmBtn.addEventListener("click", event);
+    confirmBtn.addEventListener("click", event.bind(null, currentProject));
     const cancelBtn = dom.createDivByClass(["cancel-btn"]);
     cancelBtn.addEventListener("click", removeCard);
     cancelBtn.textContent = "Cancel";
@@ -137,19 +171,29 @@ function createDescriptionInput () {
 export function getTaskContent () {
     const card = document.querySelector("#card-add");
     const children = Array.from(card.children);
+    let color = "#42ecff";
     const labels = children.filter(child=> {
         if(child.nodeName == "LABEL"){
             return child;
         }
     });
     const inputs = []
-    labels.forEach(label=> inputs.push(label.firstElementChild));
+    labels.forEach(label=> {
+        if(label.firstElementChild.nodeName == "SELECT"){
+            const select = label.firstElementChild;
+            const hasBackgroundColor = select.style.background;
+            if(hasBackgroundColor){
+                color = select.style.background;
+            }
+        }
+        inputs.push(label.firstElementChild);
+    });
     children.forEach(child=> {
         if(child.nodeName == "INPUT"|| child.nodeName == "TEXTAREA"){
             inputs.push(child);
         }
     });
-    const taskContent = {};
+    const taskContent = {color};
     const keys = ["title", "priority", "dueDate", "notes", "description"];
     for(let i = 0; i < keys.length; i++){
         taskContent[keys[i]] = inputs[i].value; 
@@ -182,3 +226,4 @@ export function AddProject() {
     h3.textContent = "Add Project";
     dom.appendNode(card, h3, titleInput, priority, notesInput, dueDateInput, description, divOption);
 }
+

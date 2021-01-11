@@ -129,6 +129,8 @@ main {
     height: 0;
     width: 90%;
     display: flex;
+    max-height: 70%;
+    overflow-y: auto;
     transition: all 1s;
     align-items: center;
     background-color: teal;
@@ -241,12 +243,13 @@ main {
     width: 80%;
     height: 10%;
     display: flex;
+    margin: 5px 0;
     position: relative;
     transition: right .5s;
     border-top-left-radius: 10px;
-    border-left: 30px solid blue;
+    border-left: 30px solid transparent;
     border-bottom-left-radius: 10px;
-    box-shadow: 0px 1px 4px 0px blue;
+    box-shadow: 0px 1px 4px 0px transparent;
 }
 
 .todo:hover {
@@ -307,11 +310,11 @@ input[type="color"] {
 }
 
 #color-label {
+    width: 70%;
     display: flex;
-    flex-direction: row-reverse;
     align-items: center;
     justify-content: flex-end;
-    width: 70%;
+    flex-direction: row-reverse;
 }
 
 #options {
@@ -357,10 +360,10 @@ input[type="color"] {
 .notes {
     width: 70%;
     height: 5%;
-    margin-top: 10%;
     border: none;
-    border-bottom: 1px solid white;
+    margin-top: 10%;
     background-color: transparent;
+    border-bottom: 1px solid white;
 }
 
 input[type="date"]{
@@ -380,4 +383,24 @@ textarea {
 
 .task {
     margin-top: 5%;
+}
+
+.project-tag {
+    border: 1px solid #505050;
+    cursor: pointer;
+    margin: 5px 0;
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 90%;
+}
+
+.color-tag {
+    border-radius: 50%;
+    border: 1px solid white;
+    width: 15px;
+    height: 15px;
 }
