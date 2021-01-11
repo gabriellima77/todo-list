@@ -1,7 +1,3 @@
-#cover {
-    flex-direction: column;
-}
-
 header {
     width: 100%;
     height: 10%;
@@ -346,4 +342,42 @@ input[type="color"] {
     width: 30%;
     height: 60%;
     background-color: white;
+}
+
+#priority {
+    border: 2px solid white;
+    margin-left: 10px;
+    color: rgb(61, 61, 61);
+    border-radius: 3px;
+    width: 100px;
+    height: 40px;
+    background-color: #42ecff;
+}
+
+.notes {
+    width: 70%;
+    height: 5%;
+    margin-top: 10%;
+    border: none;
+    border-bottom: 1px solid white;
+    background-color: transparent;
+}
+
+input[type="date"]{
+    margin-top: 10%;
+}
+
+#date {
+    margin-left: 10px;
+}
+
+textarea {
+    width: 70%;
+    margin-top: 5%;
+    height: 30%;
+    resize: none;
+}
+
+.task {
+    margin-top: 5%;
 }

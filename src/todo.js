@@ -39,58 +39,46 @@ class todo {
     }
 
     putContent(content) {
-        this.dueDate = content.date;
-        this.setNotes = content.notes;
-        this.setPriority = content.priority;
-        this.setDescription = content.description;
+        this.dueDate = content.dueDate;
+        this.notes = content.notes;
+        this.priority = content.priority;
+        this.description = content.description;
     }
 }
 
-function project(title) {
-    const projectTitle = title;
-    const todos = [];
+class project {
+    constructor(title, color) {
+        this.projectTitle = title;
+        this.projectColor = color;
+        this.todos = [];
+    }
 
-    const addTodo = (todoContent)=> {
+    addTodo(todoContent){
         const title = todoContent.title;
         const newTodo = new todo(title);
         newTodo.putContent(todoContent);
-        todos.push(todoObject);
+        this.todos.push(newTodo);
     }
 
-    const removeTodo = (todoObject)=> {
+    removeTodo(todoObject){
         const todoIndex = todos.indexOf(todoObject);
-        return todos.splice(todoIndex, 1);
+        return this.todos.splice(todoIndex, 1);
     }
 
-    const getTodo = (index)=> {
+    getTodo(index) {
         return todos[index];
     }
 
-    const getProject = ()=> todos;
+    get getProject(){
+        return this.todos;
+    }
+    get getProjectTitle(){
+        return this.projectTitle;
+    } 
 
-    const getProjectTitle = ()=> projectTitle;
-
-    return {addTodo, getProject, getTodo, removeTodo, getProjectTitle};
+    get getProjectColor(){
+        this.projectColor;
+    } 
 }
 
-const allProjects = ()=> {
-    const title = "default";
-    const all = [];
-
-    function addProject(project) {
-        all.push(project);
-    }
-
-    function removeProject(project) {
-        const projectIndex = all.indexOf(project);
-        return all.splice(projectIndex, 1);
-    }
-
-    function getAllProjects() {
-        return all;
-    }
-
-    return {addProject, removeProject, getAllProjects};
-}
-
-export {todo, project, allProjects};
+export {todo, project};
