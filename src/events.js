@@ -154,7 +154,6 @@ function updateProjectLength(index, length){
                 return tag;
             }
         })[0];
-        console.log(project);
         const numberOfTasks = project.lastElementChild;
         numberOfTasks.textContent = length;
     }
@@ -165,8 +164,10 @@ export function confirmTaskEvent(project) {
     const container = document.querySelector("#container");
     const content = getTaskContent();
     const newTodo = new todo(content.title);
+    if(project != allTasks){
+        allTasks.addTodo(newTodo);
+    }
     newTodo.putContent(content);
-    allTasks.addTodo(newTodo);
     project.addTodo(newTodo);
     const index = allTasks.todos.indexOf(newTodo);
     const projectIndex = allProject.indexOf(project);

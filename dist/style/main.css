@@ -113,6 +113,7 @@ main {
     height: 20px;
     margin: 0 10px;
     stroke: white;
+    cursor: pointer;
     stroke-width: 2px;
     transition: transform .5s;
 }
@@ -166,6 +167,7 @@ main {
     height: 100%;
     display: flex;
     margin: 0 auto;
+    overflow: auto;
     align-items: center;
     flex-direction: column;
     justify-content: flex-start;

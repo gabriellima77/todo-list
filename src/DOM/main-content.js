@@ -7,10 +7,22 @@ import {addProject, confirmTaskEvent} from '../events';
 
 let currentProject;
 
+function putTodoContent(todo, div) {
+    const svgArrow = svg.createSVGArrow(["arrow"], "0 0 40 40");
+    const checkBox = document.createElement("input");
+    checkBox.type = "checkbox";
+    checkBox.checked = todo.checked;
+    const para = document.createElement("p");
+    para.classList.add("task-title");
+    para.textContent = todo.title;
+    dom.appendNode(div, svgArrow, checkBox, para);
+}
+
 export function createTaskTag(todo) {
     const div = dom.createDivByClass(["todo"]);
     div.style.borderLeftColor = todo.colorLabel;
     div.style.boxShadow = `0px 1px 4px 0px ${todo.colorLabel}`;
+    putTodoContent(todo, div);
     return div;
 }
 
