@@ -20,8 +20,8 @@ function putTodoContent(todo, div) {
 
 export function createTaskTag(todo) {
     const div = dom.createDivByClass(["todo"]);
-    div.style.borderLeftColor = todo.colorLabel;
-    div.style.boxShadow = `0px 1px 4px 0px ${todo.colorLabel}`;
+    div.style.borderLeftColor = todo.color;
+    div.style.boxShadow = `0px 1px 4px 0px ${todo.color}`;
     putTodoContent(todo, div);
     return div;
 }
@@ -56,7 +56,7 @@ export function createContainer(project) {
     const projectInfo = dom.createDivById("project-info");
     const h2 = document.createElement("h2");
     h2.id = "project-name";
-    h2.textContent = project.projectTitle;
+    h2.textContent = project.title;
     const para = document.createElement("p");
     para.classList.add("date");
     para.textContent = "Fri, Jan, 8";
@@ -171,7 +171,7 @@ function createDueDate() {
     input.id = "date";
     input.type = "date";
     label.appendChild(input);
-    return label
+    return label;
 }
 
 function createDescriptionInput () {
@@ -235,7 +235,7 @@ export function AddProject() {
     const description = createDescriptionInput();
     const divOption = createOptions(confirmTaskEvent);
     divOption.classList.add("task");
-    h3.textContent = "Add Project";
+    h3.textContent = "Add Task";
     dom.appendNode(card, h3, titleInput, priority, notesInput, dueDateInput, description, divOption);
 }
 

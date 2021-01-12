@@ -11,7 +11,7 @@ class todo {
 
     set setPriority({priority, color}){
         this.priority = priority;
-        this.colorLabel = color;
+        this.color = color;
     }
 
     set setNotes(notes){
@@ -43,14 +43,14 @@ class todo {
         this.notes = content.notes;
         this.priority = content.priority;
         this.description = content.description;
-        this.colorLabel = content.color;
+        this.color = content.color;
     }
 }
 
 class project {
     constructor(title, color) {
-        this.projectTitle = title;
-        this.projectColor = color;
+        this.title = title;
+        this.color = color;
         this.todos = [];
     }
 
@@ -71,11 +71,11 @@ class project {
         return this.todos;
     }
     get getProjectTitle(){
-        return this.projectTitle;
+        return this.title;
     } 
 
     get getProjectColor(){
-        this.projectColor;
+        this.color;
     } 
 }
 

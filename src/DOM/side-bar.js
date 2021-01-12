@@ -1,6 +1,6 @@
 import {dom} from './dom';
 import {svg} from './svg';
-import {showProjects, putProjectTag} from '../events';
+import {showProjects, putProjectTag, removeProject} from '../events';
 import {AddProject} from './main-content';
 
 function renderSideMenu() {
@@ -30,11 +30,19 @@ function createDivProject(project) {
     const div = dom.createDivByClass(["project-tag"]);
     const projectName = document.createElement("p");
     const numberTodos = document.createElement("p");
-    projectName.textContent = project.projectTitle;
-    div.style.background = project.projectColor;
+    numberTodos.classList.add("number");
+    const remove = svg.createSVGPlus(["remove"], "0 0 40 40");
+    remove.addEventListener("click", removeProject.bind(div));
+    projectName.textContent = project.title;
+    div.style.background = project.color;
     numberTodos.textContent = project.todos.length;
-    dom.appendNode(div, projectName, numberTodos);
+    dom.appendNode(div, projectName, numberTodos, remove);
     return div;
+}
+
+export function removeTag(tag) {
+    const parent = tag.parentElement;
+    parent.removeChild(tag);
 }
 
 function putProjects(allProjects) {
@@ -48,7 +56,9 @@ function putProjects(allProjects) {
     dom.appendNode(div, plus, para);
     dom.appendNode(content, div);
     allProjects.forEach(project=> {
-        putProjectTag(project);
+        if(project.title != "Default"){
+            putProjectTag(project);
+        }
     });
 }
 

@@ -1,20 +1,25 @@
 import {allProject, allTasks} from './index';
 import {dom} from './DOM/dom';
 import {todo, project} from './todo';
-import {renderMainContent, removeCard,
-        getTaskContent, createTaskTag,
-        cleanContainer, createContainer} from './DOM/main-content';
-import {removeProjects, putProjects, createDivProject} from './DOM/side-bar';
+import {renderMainContent, removeCard, getTaskContent,
+        createTaskTag, cleanContainer, createContainer,
+        } from './DOM/main-content';
+import {removeProjects, putProjects, createDivProject,
+        removeTag} from './DOM/side-bar';
 import {startDemo, putAlert} from './DOM/singup';
 
 
-function selectProject() {
-    const main = document.querySelector("main");
-    const index = this.dataset.index;
-    const project = allProject[index];
-    cleanContainer();
-    const container = createContainer(project);
-    main.appendChild(container);
+export function selectProject(index) {
+    const target = event.target;
+    console.log(target.nodeName);
+    const isRemove = (target.nodeName == "rect" || target.nodeName == "svg")? true: false;
+    if(!isRemove){
+        const main = document.querySelector("main");
+        const project = allProject[index];
+        cleanContainer();
+        const container = createContainer(project);
+        main.appendChild(container);
+    }
 }
 
 export function demoEvent(){
@@ -26,6 +31,22 @@ export function demoEvent(){
     else{
         startDemo();
     }
+}
+
+function removeFromAllTasks(project){
+    console.log(project);
+    project.todos.forEach(todo=>{
+        let index = allTasks.todos.indexOf(todo);
+        allTasks.todos.splice(index, 1);
+    });
+    
+}
+
+export function removeProject(){
+    const index = this.dataset.index;
+    const project = allProject.splice(index, 1)[0];
+    removeFromAllTasks(project);
+    removeTag(this);
 }
 
 function isValidName() {
@@ -113,9 +134,9 @@ function isContentOpen(){
 export function putProjectTag(project){
     const content = document.querySelector("#content");
     if(isContentOpen()){
-        const projectDiv = createDivProject(project);
-        projectDiv.addEventListener("click", selectProject);
         const projectIndex = allProject.indexOf(project);
+        const projectDiv = createDivProject(project);
+        projectDiv.addEventListener("click", selectProject.bind(null, projectIndex));
         projectDiv.dataset.index = projectIndex;
         content.appendChild(projectDiv);
     }
@@ -141,13 +162,16 @@ export function addProject() {
     if(title) {
         const newProject = new project(title, color);
         allProject.push(newProject);
+        const localData = JSON.stringify(allProject);
+        localStorage.setItem("userData", localData);
         putProjectTag(newProject);
         removeCard();
     }
 }
 
 function updateProjectLength(index, length){
-    const hasIndex = (index)? true: false;
+    const hasIndex = (index !== null)? true: false;
+    console.log(isContentOpen(), hasIndex);
     if(isContentOpen() && hasIndex){
         const projects = Array.from(document.querySelectorAll(".project-tag"));
         const project = projects.filter(tag=>{
@@ -155,7 +179,11 @@ function updateProjectLength(index, length){
                 return tag;
             }
         })[0];
-        const numberOfTasks = project.lastElementChild;
+        const numberOfTasks = Array.from(project.children).filter(child=>{
+            if(child.classList.contains("number")){
+                return child;
+            }
+        })[0];
         numberOfTasks.textContent = length;
     }
     return;
@@ -177,5 +205,7 @@ export function confirmTaskEvent(project) {
     div.dataset.index = index;
     updateProjectLength(projectIndex, project.todos.length);
     container.appendChild(div);
+    const localData = JSON.stringify(allProject);
+    localStorage.setItem("userData", localData);
     removeCard();
 }

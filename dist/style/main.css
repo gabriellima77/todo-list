@@ -48,13 +48,24 @@ header {
     color: white;
 }
 
-.sing-out {
+.greeting-box {
+    display: flex;
+    align-items: center;
+    color: white;
+    position: absolute;
     right: 40px;
+}
+
+.greetings {
+    font-size: 1.2rem;
+    margin-right: 20px;
+}
+
+.sing-out {
     width: 100px;
     height: 40px;
     border: none;
     cursor: pointer;
-    position: absolute;
     border-radius: 4px;
     transition: background .5s;
     background-color: #f3f3f3;
@@ -220,6 +231,20 @@ main {
     transition: all .5s;
 }
 
+.remove {
+    width: 20px;
+    height: 20px;
+    fill: red;
+    stroke: black;
+    stroke-width: 2px;
+    cursor: pointer;
+    transform: rotate(45deg);
+}
+
+.remove:hover {
+    fill: rgb(194, 1, 1);
+}
+
 .end:hover {
     fill: #9b9b9b;
 }
@@ -242,15 +267,16 @@ main {
 
 .todo {
     right: 0;
-    width: 80%;
-    height: 10%;
+    width: 60%;
+    height: 60px;
     display: flex;
     margin: 5px 0;
     position: relative;
     transition: right .5s;
+    background-color: #b3b3b3;
     border-top-left-radius: 10px;
-    border-left: 30px solid transparent;
     border-bottom-left-radius: 10px;
+    border-left: 30px solid transparent;
     box-shadow: 0px 1px 4px 0px transparent;
 }
 
@@ -270,7 +296,6 @@ main {
     flex-direction: column;
     background-color: rgba(0, 0, 0, 0.4);
 }
-
 
 #title-label {
     width: 70%;
