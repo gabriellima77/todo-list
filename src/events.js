@@ -147,7 +147,8 @@ export function addProject() {
 }
 
 function updateProjectLength(index, length){
-    if(isContentOpen()){
+    const hasIndex = (index)? true: false;
+    if(isContentOpen() && hasIndex){
         const projects = Array.from(document.querySelectorAll(".project-tag"));
         const project = projects.filter(tag=>{
             if(tag.dataset.index == index){
@@ -164,13 +165,14 @@ export function confirmTaskEvent(project) {
     const container = document.querySelector("#container");
     const content = getTaskContent();
     const newTodo = new todo(content.title);
+    let projectIndex = null;
     if(project != allTasks){
         allTasks.addTodo(newTodo);
+        projectIndex = allProject.indexOf(project);
     }
     newTodo.putContent(content);
     project.addTodo(newTodo);
     const index = allTasks.todos.indexOf(newTodo);
-    const projectIndex = allProject.indexOf(project);
     const div = createTaskTag(newTodo);
     div.dataset.index = index;
     updateProjectLength(projectIndex, project.todos.length);
