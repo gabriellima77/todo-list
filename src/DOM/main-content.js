@@ -8,14 +8,22 @@ import {addProject, confirmTaskEvent} from '../events';
 let currentProject;
 
 function putTodoContent(todo, div) {
-    const svgArrow = svg.createSVGArrow(["arrow"], "0 0 40 40");
+    const svgArrow = svg.createSVGArrow(["arrow", "arrow-todo"], "0 0 40 40");
+    const inputContainer = document.createElement("label");
+    inputContainer.classList.add("input-container");
+    const span = dom.createSpan(["checkmark"]);
     const checkBox = document.createElement("input");
     checkBox.type = "checkbox";
     checkBox.checked = todo.checked;
+    dom.appendNode(inputContainer, checkBox, span);
     const para = document.createElement("p");
     para.classList.add("task-title");
     para.textContent = todo.title;
-    dom.appendNode(div, svgArrow, checkBox, para);
+    const edit = dom.createDivByClass(["edit"]);
+    const remove = svg.createSVGPlus(["remove", "end"], "0 0 40 40");
+    const option = dom.createDivByClass(["edit-box"]);
+    dom.appendNode(option, edit, remove)
+    dom.appendNode(div, svgArrow, inputContainer, para, option);
 }
 
 export function createTaskTag(todo) {

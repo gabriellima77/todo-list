@@ -272,16 +272,13 @@ main {
     display: flex;
     margin: 5px 0;
     position: relative;
+    align-items: center;
     transition: right .5s;
-    background-color: #b3b3b3;
+    background-color: #c0c0c0;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
     border-left: 30px solid transparent;
     box-shadow: 0px 1px 4px 0px transparent;
-}
-
-.todo:hover {
-    right: 10px;
 }
 
 #card-add {
@@ -430,4 +427,82 @@ textarea {
     border: 1px solid white;
     width: 15px;
     height: 15px;
+}
+
+.arrow-todo {
+    position: relative;
+    top: 0;
+    margin: 30px 20px 0 10px;
+    width: 30px;
+    height: 30px;
+    transform: rotate(90deg);
+    transition: top .4s;
+}
+
+.arrow-todo:hover {
+    top: 3px;
+}
+
+.task-title {
+    max-width: 60%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-left: 10%;
+}
+
+.input-container {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    cursor: pointer;
+    user-select: none;
+    border-radius: 2px;
+    align-items: center;
+    justify-content: center;
+    background-image: linear-gradient(to right bottom, #fff 40% ,rgb(126, 126, 126) 100%);
+}
+
+.checkmark {
+    opacity: 0;
+    width: 30%;
+    height: 50%;
+    margin-bottom: 3px;
+    transition: opacity .3s;
+    transform: rotate(45deg);
+    border-right: 3px solid green;
+    border-bottom: 3px solid rgb(26, 189, 26);
+}
+
+.input-container input {
+    display: none;
+}
+
+.input-container input:checked ~ .checkmark {
+    opacity: 1;
+}
+
+.edit-box {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.edit {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    background-color: transparent;
+    background-image: url("../edit.svg");
+    background-size: cover;
+    cursor: pointer;
+    transition: background .3s;
+}
+
+.edit:hover{
+    background-color: #b3b3b3;
+}
+
+.remove.end {
+    margin-left: 20px;
 }

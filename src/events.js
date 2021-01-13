@@ -11,7 +11,6 @@ import {startDemo, putAlert} from './DOM/singup';
 
 export function selectProject(index) {
     const target = event.target;
-    console.log(target.nodeName);
     const isRemove = (target.nodeName == "rect" || target.nodeName == "svg")? true: false;
     if(!isRemove){
         const main = document.querySelector("main");
@@ -20,6 +19,14 @@ export function selectProject(index) {
         const container = createContainer(project);
         main.appendChild(container);
     }
+}
+
+function goToDefault(){
+    const main = document.querySelector("main");
+    const project = allProject[0];
+    cleanContainer();
+    const container = createContainer(project);
+    main.appendChild(container);
 }
 
 export function demoEvent(){
@@ -33,13 +40,19 @@ export function demoEvent(){
     }
 }
 
+function removeTask() {
+    
+}
+
 function removeFromAllTasks(project){
     console.log(project);
     project.todos.forEach(todo=>{
         let index = allTasks.todos.indexOf(todo);
         allTasks.todos.splice(index, 1);
     });
-    
+    const localData = JSON.stringify(allProject);
+    localStorage.setItem("userData", localData);
+    goToDefault();
 }
 
 export function removeProject(){
