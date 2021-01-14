@@ -6,6 +6,16 @@ let userData = localStorage.getItem("userData");
 export const allTasks = new project("Default", "blue");
 export let allProject = [allTasks];
 
+export function getProjectByTodo(todo) {
+    const project = allProject.filter(proj=>{
+        if(proj.title !== "Default" && proj.todos.includes(todo)){
+            console.log(proj);
+            return proj;
+        }
+    })[0];
+    return project;
+}
+
 function getTasksContent(project, content) {
     content.todos.forEach(t=> {
         let newTodo = new todo(t.title);
@@ -33,3 +43,7 @@ if(userData){
     });
 }
 
+export function storeLocalData(){
+    const localData = JSON.stringify(allProject);
+    localStorage.setItem("userData", localData);
+}

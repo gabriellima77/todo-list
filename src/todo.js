@@ -44,6 +44,7 @@ class todo {
         this.priority = content.priority;
         this.description = content.description;
         this.color = content.color;
+        this.checked = content.checked;
     }
 }
 
@@ -59,12 +60,12 @@ class project {
     }
 
     removeTodo(todoObject){
-        const todoIndex = todos.indexOf(todoObject);
+        const todoIndex = this.todos.indexOf(todoObject);
         return this.todos.splice(todoIndex, 1);
     }
 
     getTodo(index) {
-        return todos[index];
+        return this.todos[index];
     }
 
     get getProject(){

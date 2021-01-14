@@ -1,9 +1,9 @@
-import {allProject, allTasks} from './index';
+import {allProject, allTasks, getProjectByTodo, storeLocalData} from './index';
 import {dom} from './DOM/dom';
 import {todo, project} from './todo';
 import {renderMainContent, removeCard, getTaskContent,
         createTaskTag, cleanContainer, createContainer,
-        } from './DOM/main-content';
+        removeTaskTag, addContent, editTaskEvent} from './DOM/main-content';
 import {removeProjects, putProjects, createDivProject,
         removeTag} from './DOM/side-bar';
 import {startDemo, putAlert} from './DOM/singup';
@@ -40,18 +40,12 @@ export function demoEvent(){
     }
 }
 
-function removeTask() {
-    
-}
-
 function removeFromAllTasks(project){
-    console.log(project);
     project.todos.forEach(todo=>{
         let index = allTasks.todos.indexOf(todo);
         allTasks.todos.splice(index, 1);
     });
-    const localData = JSON.stringify(allProject);
-    localStorage.setItem("userData", localData);
+    storeLocalData();
     goToDefault();
 }
 
@@ -175,8 +169,7 @@ export function addProject() {
     if(title) {
         const newProject = new project(title, color);
         allProject.push(newProject);
-        const localData = JSON.stringify(allProject);
-        localStorage.setItem("userData", localData);
+        storeLocalData();
         putProjectTag(newProject);
         removeCard();
     }
@@ -184,7 +177,6 @@ export function addProject() {
 
 function updateProjectLength(index, length){
     const hasIndex = (index !== null)? true: false;
-    console.log(isContentOpen(), hasIndex);
     if(isContentOpen() && hasIndex){
         const projects = Array.from(document.querySelectorAll(".project-tag"));
         const project = projects.filter(tag=>{
@@ -200,6 +192,20 @@ function updateProjectLength(index, length){
         numberOfTasks.textContent = length;
     }
     return;
+}
+
+export function removeTask(todo){
+    event.stopPropagation();
+    const project = getProjectByTodo(todo);
+    if(project){
+        project.removeTodo(todo);
+        const index = allProject.indexOf(project);
+        const length = project.todos.length;
+        updateProjectLength(index, length);
+    }
+    allTasks.removeTodo(todo);
+    storeLocalData();
+    removeTaskTag(this);
 }
 
 export function confirmTaskEvent(project) {
@@ -218,7 +224,47 @@ export function confirmTaskEvent(project) {
     div.dataset.index = index;
     updateProjectLength(projectIndex, project.todos.length);
     container.appendChild(div);
-    const localData = JSON.stringify(allProject);
-    localStorage.setItem("userData", localData);
+    storeLocalData();
     removeCard();
+}
+
+function removeContent(container){
+    const children = Array.from(container.children);
+    children.forEach(child=> container.removeChild(child));
+}
+
+export function showTaskContent(todo) {
+    const isTaskOpen = this.classList.contains("open");
+    if(!isTaskOpen){
+        this.classList.add("open");
+        addContent(this, todo);
+    }
+    else {
+        this.classList.remove("open");
+        removeContent(this);
+    }
+}
+
+export function changeChecked(todo) {
+    const container = this.parentElement.parentElement;
+    const children = Array.from(container.children);
+    const todoTitle = children.filter(child=> {
+        if(child.classList.contains("task-title")){
+            return child;
+        }
+    })[0];
+    todo.checked = this.checked;
+    if(todo.checked){
+        todoTitle.classList.add("checked");
+    }
+    else {
+        todoTitle.classList.remove("checked");
+    }
+    storeLocalData();
+    console.log(todo);
+}
+
+export function editEvent(todo) {
+    event.stopPropagation();
+    editTaskEvent(todo, this);
 }
