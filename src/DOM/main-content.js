@@ -291,6 +291,10 @@ function confirmEditTask(todoTag){
         if(project){
             todoIndex = project.todos.indexOf(this);
         }
+        
+    }
+    if(!project){
+        todoIndex = allTasks.todos.indexOf(this);
     }
     const todoContainer = todoTag.parentElement;
     const children = Array.from(todoContainer.children);
@@ -300,10 +304,14 @@ function confirmEditTask(todoTag){
         }
     })[0];
     const content = getTaskContent();
+    console.log(todoIndex);
     for(let key in content){
         this[key] = content[key];
         if(project){
             project.todos[todoIndex][key] = content[key];
+        }
+        else {
+            allTasks.todos[todoIndex][key] = content[key];
         }
     }
     clearTag(todoTag);
