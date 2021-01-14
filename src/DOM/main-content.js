@@ -1,4 +1,4 @@
-import {allTasks} from '../index';
+import {allTasks, getProjectByTodo} from '../index';
 import {dom} from './dom';
 import {svg} from './svg';
 import {renderSideMenu} from './side-bar';
@@ -284,6 +284,14 @@ function clearTag(todoTag){
 }
 
 function confirmEditTask(todoTag){
+    let project;
+    let todoIndex;
+    if(currentProject.title == "Default"){
+        project = getProjectByTodo(this);
+        if(project){
+            todoIndex = project.todos.indexOf(this);
+        }
+    }
     const todoContainer = todoTag.parentElement;
     const children = Array.from(todoContainer.children);
     const contentBox = children.filter(child=>{
@@ -294,8 +302,13 @@ function confirmEditTask(todoTag){
     const content = getTaskContent();
     for(let key in content){
         this[key] = content[key];
+        if(project){
+            project.todos[todoIndex][key] = content[key];
+        }
     }
     clearTag(todoTag);
+    todoTag.style.borderLeftColor = this.color;
+    todoTag.style.boxShadow = `0px 1px 4px 0px ${this.color}`;
     putTodoContent(this, todoTag);
     if(contentBox.classList.contains("open")){
         contentBox.classList.remove("open");
