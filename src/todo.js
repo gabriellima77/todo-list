@@ -3,6 +3,7 @@ class todo {
         this.title = title;
         this.checked = false;
         this.notes = "";
+        this.isDefault = false;
     }
 
     set setDescription(description) {

@@ -1,4 +1,5 @@
-import {allTasks, getProjectByTodo} from '../index';
+import {allTasks, getProjectByTodo, storeLocalData} from '../index';
+import {format} from 'date-fns';
 import {dom} from './dom';
 import {svg} from './svg';
 import {renderSideMenu} from './side-bar';
@@ -25,12 +26,15 @@ function putTodoContent(todo, div) {
         para.classList.add("checked");
     }
     para.textContent = todo.title;
+    const dueDate = document.createElement("p");
+    dueDate.classList.add("dueDate");
+    dueDate.textContent = todo.dueDate;
     const edit = dom.createDivByClass(["edit"]);
     edit.addEventListener("click", editEvent.bind(div, todo));
     const remove = svg.createSVGPlus(["remove", "end"], "0 0 40 40");
     remove.addEventListener("click", removeTask.bind(div, todo));
     const option = dom.createDivByClass(["edit-box"]);
-    dom.appendNode(option, edit, remove)
+    dom.appendNode(option, dueDate, edit, remove);
     dom.appendNode(div, svgArrow, inputContainer, para, option);
 }
 
@@ -85,7 +89,7 @@ export function createContainer(project) {
     h2.textContent = project.title;
     const para = document.createElement("p");
     para.classList.add("date");
-    para.textContent = "Fri, Jan, 8";
+    para.textContent = format(new Date(), "ccc, MMM, dd");
     dom.appendNode(projectInfo, h2, para)
     const addTask = createAddTaskBtn();
     dom.appendNode(content, projectInfo, addTask);
@@ -205,7 +209,8 @@ function createDueDate(todo) {
     input.type = "date";
     label.appendChild(input);
     if(todo){
-        input.value = todo.dueDate;
+        const dueDate = format(new Date(todo.dueDate), "yyyy-MM-dd");
+        input.value = dueDate;
     }
     return label;
 }
@@ -247,7 +252,15 @@ export function getTaskContent () {
     const taskContent = {color, checked: false};
     const keys = ["title", "priority", "dueDate", "notes", "description"];
     for(let i = 0; i < keys.length; i++){
-        taskContent[keys[i]] = inputs[i].value; 
+        if(keys[i] == "dueDate"){
+            const str = inputs[i].value.replaceAll("-", ", ");
+            const dueDate = (str.length == 0)? format(new Date(), "MM/dd/yyyy")
+                                             : format(new Date(str), "MM/dd/yyyy");
+            taskContent[keys[i]] = dueDate;
+        }
+        else {
+            taskContent[keys[i]] = inputs[i].value;
+        }
     }
     return taskContent;
 }
@@ -323,6 +336,7 @@ function confirmEditTask(todoTag){
         clearTag(contentBox);
     }
     removeCard();
+    storeLocalData();
 }
 
 export function editTaskEvent(todo, todoTag) {

@@ -20,7 +20,19 @@ function getTasksContent(project, content) {
     content.todos.forEach(t=> {
         let newTodo = new todo(t.title);
         newTodo.putContent(t);
+        allTasks.addTodo(newTodo);
         project.addTodo(newTodo);
+    });
+}
+
+function getDefaultContent(project){
+    project.todos.forEach(t=>{
+        if(t.isDefault){
+            let newTodo = new todo(t.title);
+            newTodo.isDefault = true;
+            newTodo.putContent(t);
+            allTasks.addTodo(newTodo)
+        }
     });
 }
 
@@ -28,16 +40,20 @@ function getProjects(content) {
     const title = content.title;
     const color = content.color;
     const newProject = new project(title, color);
+    console.log(content);
     getTasksContent(newProject, content);
     return newProject;
 }
 
 if(userData){
+    let def;
     userData = JSON.parse(userData);
     userData.forEach(p=> {
         if(p.title == "Default"){
-            getTasksContent(allTasks, p);
-        }else {
+            def = p;
+            getDefaultContent(def);
+        }
+        else{
             allProject.push(getProjects(p));
         }
     });

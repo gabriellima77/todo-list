@@ -217,6 +217,9 @@ export function confirmTaskEvent(project) {
         allTasks.addTodo(newTodo);
         projectIndex = allProject.indexOf(project);
     }
+    else{
+        newTodo.isDefault = true;
+    }
     newTodo.putContent(content);
     project.addTodo(newTodo);
     const index = allTasks.todos.indexOf(newTodo);

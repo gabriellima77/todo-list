@@ -556,3 +556,8 @@ textarea {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.dueDate {
+    margin-right: 20px;
+    color: white;
+}
