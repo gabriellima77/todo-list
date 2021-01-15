@@ -61,7 +61,7 @@ header {
     margin-right: 20px;
 }
 
-.sing-out {
+.sign-out {
     width: 100px;
     height: 40px;
     border: none;
@@ -71,11 +71,11 @@ header {
     background-color: #f3f3f3;
 }
 
-.sing-out:hover {
+.sign-out:hover {
     background-color: #d4d4d4;
 }
 
-.sing-out:active {
+.sign-out:active {
     background-color: #acacac;
 }
 

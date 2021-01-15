@@ -105,9 +105,9 @@ export function createMain(){
     return main;
 }
 
-export function renderMainContent(){
+export function renderMainContent(user){
     const body = document.querySelector("body");
-    const header = createHeader();
+    const header = createHeader(user);
     const main = createMain();
     dom.appendNode(body, header, main);
 }
@@ -317,7 +317,6 @@ function confirmEditTask(todoTag){
         }
     })[0];
     const content = getTaskContent();
-    console.log(todoIndex);
     for(let key in content){
         this[key] = content[key];
         if(project){

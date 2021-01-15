@@ -9,7 +9,6 @@ export let allProject = [allTasks];
 export function getProjectByTodo(todo) {
     const project = allProject.filter(proj=>{
         if(proj.title !== "Default" && proj.todos.includes(todo)){
-            console.log(proj);
             return proj;
         }
     })[0];
@@ -40,7 +39,6 @@ function getProjects(content) {
     const title = content.title;
     const color = content.color;
     const newProject = new project(title, color);
-    console.log(content);
     getTasksContent(newProject, content);
     return newProject;
 }

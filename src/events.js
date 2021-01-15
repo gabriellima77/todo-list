@@ -1,4 +1,5 @@
 import {allProject, allTasks, getProjectByTodo, storeLocalData} from './index';
+import {dataBase, auth} from './login';
 import {dom} from './DOM/dom';
 import {todo, project} from './todo';
 import {renderMainContent, removeCard, getTaskContent,
@@ -45,7 +46,15 @@ function removeFromAllTasks(project){
         let index = allTasks.todos.indexOf(todo);
         allTasks.todos.splice(index, 1);
     });
-    storeLocalData();
+    const isLogged = JSON.parse(localStorage.getItem("logged"));
+    if(isLogged){
+        const user = auth.currentUser;
+        console.log(user.uid);
+        dataBase.ref(user.uid).set(allProject);
+    }
+    else {
+        storeLocalData();
+    }
     goToDefault();
 }
 
@@ -75,7 +84,8 @@ export function startApp() {
         renderMainContent();
     }
     else {
-        putAlert("Has at least one letter at beginning");
+        const label = document.querySelector("#user");
+        putAlert("Has at least one letter at beginning", label);
     }
 }
 
@@ -169,7 +179,15 @@ export function addProject() {
     if(title) {
         const newProject = new project(title, color);
         allProject.push(newProject);
-        storeLocalData();
+        const isLogged = JSON.parse(localStorage.getItem("logged"));
+        if(isLogged){
+            const user = auth.currentUser;
+            console.log(user.uid);
+            dataBase.ref(user.uid).set(allProject);
+        }
+        else {
+            storeLocalData();
+        }
         putProjectTag(newProject);
         removeCard();
     }
@@ -227,7 +245,15 @@ export function confirmTaskEvent(project) {
     div.dataset.index = index;
     updateProjectLength(projectIndex, project.todos.length);
     container.appendChild(div);
-    storeLocalData();
+    const isLogged = JSON.parse(localStorage.getItem("logged"));
+    if(isLogged){
+        const user = auth.currentUser;
+        console.log(user.uid);
+        dataBase.ref(user.uid).set(allProject);
+    }
+    else {
+        storeLocalData();
+    }
     removeCard();
 }
 
@@ -263,8 +289,15 @@ export function changeChecked(todo) {
     else {
         todoTitle.classList.remove("checked");
     }
-    storeLocalData();
-    console.log(todo);
+    const isLogged = JSON.parse(localStorage.getItem("logged"));
+    if(isLogged){
+        const user = auth.currentUser;
+        console.log(user.uid);
+        dataBase.ref(user.uid).set(allProject);
+    }
+    else {
+        storeLocalData();
+    }
 }
 
 export function editEvent(todo) {

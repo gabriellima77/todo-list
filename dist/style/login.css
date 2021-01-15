@@ -37,7 +37,7 @@ body {
     border: 3px solid rgba(0, 0, 0, 0.3);
 }
 
-#user, #password {
+#user, #password, #name {
     color: white;
     display: flex;
     flex-direction: column;
@@ -117,7 +117,7 @@ body {
     position: absolute;
     color: red;
     width: 200px;
-    height: 100px;
+    height: 90px;
     background-color: #f3f3f3;
     clip-path: polygon(15% 34%, 15% 0, 100% 0, 100% 100%, 15% 100%, 15% 66%, 0% 50%);
 }

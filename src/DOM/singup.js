@@ -1,19 +1,24 @@
 import {dom} from './dom';
+import {signIn, signUp} from '../login';
 import {startApp, demoEvent} from '../events';
 
 function renderLoginWindow(){
     const body = document.querySelector("body");
     const imgSrc = "https://www.flaticon.com/svg/static/icons/svg/747/747376.svg";
     const img = dom.createImg("user-img", imgSrc);
-    const labelsContent = [{id: "user", text: "Username"}, {id: "password", text: "Password"}];
-    const inputsContent = [{classList: ["login-input"], placeHolder: "Enter Username"},
+    const labelsContent = [{id: "user", text: "Email"}, {id: "password", text: "Password"}];
+    const inputsContent = [{classList: ["login-input"], placeHolder: "Enter Email"},
                            {classList: ["login-input"], placeHolder: "Enter Password"}];
     const form = createForm(labelsContent, inputsContent);
     const div = dom.createDivById("login");
-    const btnsContent = [{classList: ["btn"], type: "button", text: "Singin"}, 
-                   {classList: ["btn"], type: "button", text: "Singup"}];
+    const btnsContent = [{classList: ["btn"], type: "button", text: "SignIn", event: signIn}, 
+                   {classList: ["btn"], type: "button", text: "SignUp", event: signUp}];
     const buttons = btnsContent.reduce((btns, btnContent)=> {
-        btns.push(dom.createBtn(btnContent));
+        let btn = dom.createBtn(btnContent)
+        if(btnContent.event){
+            btn.addEventListener("click", btnContent.event);
+        }
+        btns.push(btn);
         return btns;
     }, []);
     const demoBtn = dom.createBtn({classList: ["btn", "demo"], type:"button", text: "Demo Account"});
@@ -23,13 +28,19 @@ function renderLoginWindow(){
     dom.appendNode(body, img, form);
 }
 
-function createForm(labelsContent, inputsContent) {
+export function createForm(labelsContent, inputsContent) {
     const form = document.createElement("form");
     form.onsubmit = ()=> {return false};
     form.classList.add("form-login");
     const labels = [];
     for(let i = 0; i < labelsContent.length; i++){
         let input = dom.createTextInput(inputsContent[i]);
+        if(labelsContent[i].id == "password"){
+            input.type = "password";
+        }
+        else {
+            input.type = "email";
+        }
         let label = dom.createLabel(labelsContent[i]);
         dom.appendNode(label, input);
         labels.push(label);
@@ -38,16 +49,15 @@ function createForm(labelsContent, inputsContent) {
     return form;
 }
 
-function getAlertPosition() {
-    const input = document.querySelector(".login-input");
+function getAlertPosition(label) {
+    const input = label.firstElementChild;
     const left = input.offsetLeft + input.offsetWidth + 3;
-    const bottom = input.offsetTop + (input.offsetHeight / 2) + 30;
-    const position = {left, bottom};
+    const top = input.offsetTop + (input.offsetHeight / 2) - 45;
+    const position = {left, top};
     return position;
 }
 
-export function putAlert(alert) {
-    const label = document.querySelector("#user");
+export function putAlert(alert, label) {
     const children = Array.from(label.children);
     children.forEach(child=> {
         const hasAlert = child.classList.contains("alert");
@@ -56,7 +66,7 @@ export function putAlert(alert) {
         }
     });
     const div = dom.createDivByClass(["alert"]);
-    const position = getAlertPosition();
+    const position = getAlertPosition(label);
     for(let key in position){
         div.style[key] = position[key] + "px";
     }
