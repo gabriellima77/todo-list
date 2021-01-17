@@ -1,4 +1,4 @@
-import {allTasks, getProjectByTodo, storeLocalData} from '../index';
+import {allProject, allTasks, getProjectByTodo, storeLocalData} from '../index';
 import {format} from 'date-fns';
 import {dom} from './dom';
 import {svg} from './svg';

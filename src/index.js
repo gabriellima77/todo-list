@@ -18,7 +18,7 @@ Sign.domFunctions.renderLoginWindow();
 export const dataBase = firebase.database();
 export const auth = firebase.auth();
 let userData = localStorage.getItem("userData");
-export const allTasks = new project("Default", "blue");
+export let allTasks = new project("Default", "blue");
 export let allProject = [allTasks];
 
 export function getProjectByTodo(todo) {

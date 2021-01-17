@@ -1,11 +1,59 @@
 import {dom} from './dom';
-import {renderMainContent} from './main-content';
-import {auth, allTasks, allProject} from '../index';
+import { renderMainContent } from './main-content';
+import { auth, allTasks, allProject } from '../index';
+import { project, todo } from '../todo';
 
 const sign = function () {
 
-    function getUserData() {
+    function getDefaultTodo(proj) {
+        proj.todos.forEach(t=> {
+            if(t.isDefault){
+                const newTodo = new todo(t.title);
+                newTodo.putContent(t);
+                allTasks.addTodo(newTodo);
+            }
+        });
+    }
+
+    function getTodo (t) {
+        const newTodo = new todo(t.title);
+        newTodo.putContent(t);
+        return newTodo;
+    }
+
+    function getProject(proj){
+        const newProject = new project(proj.title, proj.color);
+        proj.todos.forEach(todo=> {
+            const newTodo = getTodo(todo);
+            allTasks.addTodo(newTodo);
+            newProject.addTodo(newTodo);
+        });
+        return newProject;
+    }
+
+    function setData(userData){
+        userData.forEach(project=>{
+            if(project.title == "Default"){
+                getDefaultTodo(project);
+            }
+            else {
+                const newProject = getProject(project);
+                allProject.push(newProject);
+            }
+        });
+    }
+
+    async function getUserData(user) {
+        let userData;
         const database = firebase.database();
+        await database.ref(user.uid).once("value").then((snapshot)=> {
+            userData = snapshot.val();
+            allTasks = new project("Default", "blue");
+            allProject = [allTasks];
+            setData(userData);
+        });
+        dom.removeBodyContent();
+        renderMainContent(user);
     }
 
     const domFunctions = {
@@ -112,12 +160,11 @@ const sign = function () {
                     domFunctions.putAlert(e.message, emailInput);
                 });
                 promisse.then(()=>{
-                    const user = auth.currentUser;
-                    localStorage.setItem("logged", true);
-                    getUserData();
-                    dom.removeBodyContent();
-                    renderMainContent(user);
-                });
+                        const user = auth.currentUser;
+                        localStorage.setItem("logged", true);
+                        getUserData(user);
+                    });
+
             }
         },
 
@@ -157,11 +204,10 @@ const sign = function () {
                 promisse.then(()=>{
                     const currentUser = auth.currentUser;
                     currentUser.updateProfile({displayName: user.name}).then(()=>{
-                        console.log(currentUser);
+                        localStorage.setItem("logged", true);
+                        dom.removeBodyContent();
+                        renderMainContent(currentUser);
                     });
-                    localStorage.setItem("logged", true);
-                    dom.removeBodyContent();
-                    renderMainContent(currentUser);
                 });
             }
         },
