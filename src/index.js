@@ -1,7 +1,22 @@
-import {renderLoginWindow} from './DOM/singup';
+import {Sign} from './DOM/singup';
 import {todo, project} from './todo';
 
-renderLoginWindow();
+Sign.domFunctions.renderLoginWindow();
+(function() {
+    const firebaseConfig = {
+        apiKey: "AIzaSyAWA950UMSKFseXouL0BkkUev4AhzyTwsg",
+        authDomain: "todo-list-2854d.firebaseapp.com",
+        projectId: "todo-list-2854d",
+        storageBucket: "todo-list-2854d.appspot.com",
+        messagingSenderId: "951297494110",
+        appId: "1:951297494110:web:dd4551a86ed965827738cf"
+      };
+// Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+})()
+
+export const dataBase = firebase.database();
+export const auth = firebase.auth();
 let userData = localStorage.getItem("userData");
 export const allTasks = new project("Default", "blue");
 export let allProject = [allTasks];

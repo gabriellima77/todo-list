@@ -2,13 +2,20 @@ import {allTasks, getProjectByTodo, storeLocalData} from '../index';
 import {format} from 'date-fns';
 import {dom} from './dom';
 import {svg} from './svg';
-import {renderSideMenu} from './side-bar';
-import {createHeader} from './header-bar';
-import {addProject, confirmTaskEvent, removeTask,
+import {SideBar} from './side-bar';
+import {Header} from './header-bar';
+import {confirmTaskEvent, removeTask,
         showTaskContent, changeChecked, editEvent} from '../events';
 
-
 let currentProject;
+const main = function () {
+    
+
+}
+
+const events = function() {
+
+}
 
 function putTodoContent(todo, div) {
     const svgArrow = svg.createSVGArrow(["arrow", "arrow-todo"], "0 0 40 40");
@@ -100,14 +107,14 @@ export function createContainer(project) {
 export function createMain(){
     const main = document.createElement("main");
     const div = createContainer(allTasks);
-    const nav = renderSideMenu();
+    const nav = SideBar.renderSideMenu();
     dom.appendNode(main, nav, div);
     return main;
 }
 
 export function renderMainContent(user){
     const body = document.querySelector("body");
-    const header = createHeader(user);
+    const header = Header.createHeader(user);
     const main = createMain();
     dom.appendNode(body, header, main);
 }
@@ -169,6 +176,16 @@ function createOptions(event, todo = null) {
     cancelBtn.textContent = "Cancel";
     dom.appendNode(divOption, confirmBtn, cancelBtn);
     return divOption;
+}
+
+export function AddProject() {
+    const card = renderAddCard();
+    const h3 = document.createElement("h3");
+    const colorLabel = createColorPicker();
+    const titleInput = createTitleInput();
+    const divOption = createOptions(SideBar.addProject);
+    h3.textContent = "Add Project";
+    dom.appendNode(card, h3, titleInput, colorLabel, divOption);
 }
 
 function getColor() {
@@ -263,16 +280,6 @@ export function getTaskContent () {
         }
     }
     return taskContent;
-}
-
-export function AddProject() {
-    const card = renderAddCard();
-    const h3 = document.createElement("h3");
-    const colorLabel = createColorPicker();
-    const titleInput = createTitleInput();
-    const divOption = createOptions(addProject);
-    h3.textContent = "Add Project";
-    dom.appendNode(card, h3, titleInput, colorLabel, divOption);
 }
 
  export function AddTaskEvent() {
@@ -372,4 +379,13 @@ export function addContent(container, todo) {
         dom.appendNode(notes, notesHeader, notesPara);
         dom.appendNode(container, description, notes);
     }
+}
+
+export function isContentOpen(){
+    const content = document.querySelector("#content");
+    const hasClass = content.classList.value;
+    if(hasClass){
+        return true;
+    }
+    return false;
 }
